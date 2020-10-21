@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Equity Dash</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+    <div class="full-height vertical-align">
+      <h1 class="underline-label">Equity Dash</h1>
+      <small class="underline-label">Filter by Sector</small>
+      <span id="filter-container">
+          <button class="main-button active" id="Technology">
+            <div class="spinner hidden" id="spinner0"></div>
+            <span id="button-text0">Technology</span>
+          </button>
+          <button class="main-button" id="Services">
+            <div class="spinner hidden" id="spinner1"></div>
+            <span id="button-text1">Services</span>
+          </button>
+          <button class="main-button" id="Financial">
+            <div class="spinner hidden" id="spinner2"></div>
+            <span id="button-text2">Financial</span>
+          </button>
+          <button class="main-button" id="Utilities">
+            <div class="spinner hidden" id="spinner3"></div>
+            <span id="button-text3">Utilities</span>
+          </button>
+          <button class="main-button" id="Healthcare">
+            <div class="spinner hidden" id="spinner4"></div>
+            <span id="button-text4">Healthcare</span>
+          </button>
+          <button class="main-button" id="ConsumerGoods">
+            <div class="spinner hidden" id="spinner5"></div>
+            <span id="button-text5">Consumer Goods</span>
+          </button>
+      </span>
+      <div class="container max-height">
+        <table>
+          <thead>
+            <tr>
+              <th class="">Ticker</th>
+              <th class="">Price</th>
+              <th>% Change</th>
+              <th class="">Market Cap</th>
+              <th class="">Analyst Consensus</th>
+              <th class="">Hedge Fund Sentiment</th>
+              <th class="">Retail Sentiment</th>
+              <th class="">Last 5 Trades</th>
+            </tr>
+          </thead>
+        <tbody id="table-body">
+        <% for( let x = 0; x<data.length ; x++ ) { %>
+          <tr id="table-row" class="table-row">
+            <td data-label="Ticker"><%= data[x].ticker %></td>
+            <% if (prices[x].deltaIndicator == 'down') { %>
+              <td data-label="Price" style="color: #b6314b;" class="price"><%= prices[x].price %></td>
+              <td data-label='% Change' class="change" style="color: #b6314b;"><b><%= prices[x].deltaIndicator %></b> <%= prices[x].percentChange %></td>
+            <% } %>
+            <% if (prices[x].deltaIndicator != 'down') { %>
+              <td data-label="Price" style="color: #208f20;" class="price"><%= prices[x].price %></td>
+              <td data-label='% Change' class="change" style="color: #208f20;"><b><%= prices[x].deltaIndicator %></b> <%= prices[x].percentChange %></td>
+            <% } %>
+            <td data-label='Market Cap'>$<%= data[x].marketCap %></td>
+            <td data-label='Analyst Consensus'><%= data[x].analystConsensus %></td>
+            <% if (data[x].hedgeFund == 'Positive') { %>
+              <td data-label='Hedge Fund Sentiment' style="color: #208f20;"><%= data[x].hedgeFund %></td>
+            <% } else if (data[x].hedgeFund == 'Negative') { %>
+              <td data-label='Hedge Fund Sentiment' style="color: #b6314b;"><%= data[x].hedgeFund %>
+            <% } else { %>
+              <td data-label='Hedge Fund Sentiment' style="color: #b6ad31;"><%= data[x].hedgeFund %>
+            <% } %>
+            <td data-label='Retail Sentiment'><%= data[x].retail %></td>
+            <td data-label='Last 5 Trades' class="modal-button" id="<%= data[x].ticker %>">
+              <button>View</button>
+            </td>
+            <!-- Modal -->
+            <div id="modal<%=[x]%>" class="modal">
+              <div class="modal-content">
+                <h1 class="title">Trades</h1>
+                <br> 
+                <div class="modal-div">
+                </div>
+                <br> 
+                <span><button class="close-modal" style="margin-bottom: 25px;"><b>Exit</b></button></span>
+              </div>
+            </div>
+          </tr> 
+          <% } %>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-error" id="errors" role="alert"></div>
+      <small class="disclaimer">All data sourced from NASDAQ ∞ Top 20 tickers from each sector</small>
+      <small class="disclaimer">made with 🖤 by @samoculus</small>
+      <br>
+    </div>
+    </header>
+    <script src="/assets/js/filter.js"></script>
+    <script src="/assets/js/prices.js"></script>
+  </body>
+</html>
