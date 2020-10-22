@@ -1,6 +1,6 @@
 # equity-dash
 Real time dashboard tracking equity prices &amp; latest trades.
-Also tracks analyst, hedge fund, & retial investor sentiment.
+Also tracks analyst, hedge fund, & retail investor sentiment.
 
  Run the commands npm install & npm run dev to launch.
  
